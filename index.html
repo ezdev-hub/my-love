@@ -102,6 +102,9 @@ p {
 <p>Si me dieras alas volaría por ti,<br>si me dieras una espada me levantaría y pelearía por ti,<br>aún así el cielo nos atravesará con su luz</p>
 <div class="hint">Toca la pantalla para ver una explosión de amor 💛🧡🌻</div>
 
+<!-- Música -->
+<audio id="loveMusic" src="micancion.mp3" loop></audio>
+
 <script>
 const fallEmojis = ['🌻','💛','🧡','💞','💖'];
 const lovePhrases = [
@@ -161,11 +164,18 @@ function explosion(x, y) {
   }
 }
 
-document.addEventListener('touchstart', e=>{
+const music = document.getElementById('loveMusic');
+
+document.addEventListener('touchstart', e => {
   const x = e.touches[0].clientX;
   const y = e.touches[0].clientY;
-  explosion(x,y);
+
+  explosion(x, y);
+  if (music.paused) {
+    music.play();
+  }
 });
 </script>
 </body>
 </html>
+
