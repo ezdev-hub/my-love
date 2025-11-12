@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Para mi amor 💛🌻🧡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;500&display=swap');
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(180deg, #ffb366 0%, #ff8a00 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #0b0b0b;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  animation: pulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.03); }
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  margin: 10px 15px 0;
+  line-height: 1.4;
+  color: rgba(11,11,11,0.95);
+}
+
+.hint {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+.falling, .loveFalling, .expl {
+  position: absolute;
+  pointer-events: none;
+}
+
+.falling {
+  font-size: 1.2rem;
+  z-index: 1;
+  text-shadow: 0 0 6px rgba(0,0,0,0.06);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity:1; }
+  100%{ transform: translateY(120vh) rotate(360deg); opacity:0; }
+}
+
+.loveFalling {
+  z-index: 2;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 0 3px rgba(0,0,0,0.1);
+  animation: loveFall linear forwards;
+}
+
+@keyframes loveFall {
+  0% { transform: translateY(-5vh) rotate(-2deg); opacity:0.9; }
+  100% { transform: translateY(120vh) rotate(2deg); opacity:0; }
+}
+
+.expl {
+  z-index: 3;
+  font-size: 1.2rem;
+  text-shadow: 0 0 4px rgba(0,0,0,0.1);
+  animation: explodeAnim 900ms ease-out forwards;
+}
+
+@keyframes explodeAnim {
+  0% { transform: translate(0,0) scale(0.6); opacity:1; }
+  100%{ transform: translate(var(--x),var(--y)) scale(1.1); opacity:0; }
+}
+</style>
+</head>
+<body>
+<h1>Te amo mucho mi vida 💞</h1>
+<p>Si me dieras alas volaría por ti,<br>si me dieras una espada me levantaría y pelearía por ti,<br>aún así el cielo nos atravesará con su luz</p>
+<div class="hint">Toca la pantalla para ver una explosión de amor 💛🧡🌻</div>
+
+<script>
+const fallEmojis = ['🌻','💛','🧡'];
+const lovePhrases = [
+  "Eres mi lugar favorito.",
+  "Contigo todo es mejor.",
+  "No dejo de pensar en ti.",
+  "Tu sonrisa me atrapa.",
+  "Eres mi paz y mi caos.",
+  "Me haces sonreír sin querer.",
+  "Siempre quiero más de ti.",
+  "Eres mi momento feliz.",
+  "No sabía que necesitaba alguien como tú.",
+  "Contigo todo tiene sentido."
+];
+
+// Emojis cayendo
+function createFalling() {
+  const el = document.createElement('div');
+  el.className = 'falling';
+  el.textContent = fallEmojis[Math.floor(Math.random()*fallEmojis.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (16 + Math.random()*20) + 'px';
+  el.style.animationDuration = (5 + Math.random()*5) + 's';
+  el.style.opacity = 0.7 + Math.random()*0.3;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 11000);
+}
+setInterval(createFalling, 400);
+
+// Frases cayendo suavemente
+function createLovePhrase() {
+  const el = document.createElement('div');
+  el.className = 'loveFalling';
+  el.textContent = lovePhrases[Math.floor(Math.random()*lovePhrases.length)];
+  el.style.left = Math.random() * 80 + 'vw';
+  el.style.fontSize = (12 + Math.random()*8) + 'px';
+  el.style.animationDuration = (15 + Math.random()*10) + 's';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 30000);
+}
+setInterval(createLovePhrase, 2000);
+
+// Explosión de emojis al tocar
+function explosion(x, y) {
+  const count = 12;
+  for (let i=0; i<count; i++){
+    const sp = document.createElement('div');
+    sp.className = 'expl';
+    sp.textContent = fallEmojis[Math.floor(Math.random()*fallEmojis.length)];
+    sp.style.left = x + 'px';
+    sp.style.top = y + 'px';
+    const angle = Math.random() * Math.PI*2;
+    const dist = 60 + Math.random()*100;
+    sp.style.setProperty('--x', Math.cos(angle)*dist + 'px');
+    sp.style.setProperty('--y', Math.sin(angle)*dist + 'px');
+    sp.style.fontSize = (14 + Math.random()*24) + 'px';
+    document.body.appendChild(sp);
+    setTimeout(()=>sp.remove(),900);
+  }
+}
+
+// Tocar pantalla para la explosión
+document.addEventListener('touchstart', e=>{
+  const x = e.touches[0].clientX;
+  const y = e.touches[0].clientY;
+  explosion(x,y);
+});
+</script>
+</body>
+</html>
